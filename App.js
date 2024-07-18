@@ -21,8 +21,6 @@ export default function App() {
     },5000)
   },[])
   return (
-  
-
     <Provider store={store}>
        {show ? <SplashScreen/>:
        <MyTabs/>

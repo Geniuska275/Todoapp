@@ -23,7 +23,7 @@ const Todos = () => {
         data={todos.Todolist}
         renderItem={({item}) => <Todo title={item.todo} id={item.id} time={item.time}  date={item.date} status={item.completed}/>}
         keyExtractor={(item) => item.title}
-        ListHeaderComponent={() => <Text style={{marginTop:20, fontWeight:"bold", marginLeft:20, marginBottom:10}}>My Todos({todos.Todolist?.length})</Text>} 
+        ListHeaderComponent={() => <Text style={{marginTop:20, fontWeight:"bold", marginLeft:20, marginBottom:10}}>{todos.Todolist.length=== 0 ? "Please,Add a Todo." : `My todos (${todos.Todolist.length})`}</Text>}
         contentContainerStyle={{paddingHorizontal:20}}
       
       />

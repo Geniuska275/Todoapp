@@ -9,7 +9,7 @@ import { useSelector } from 'react-redux'
 const CompletedTodos = () => {
   const [modalVisible, setModalVisible] = useState(false);
   const todos = useSelector((state)=>state.todos)
-   const { radius ,text,texts} = styles;
+   const { radius ,text, texts} = styles;
    const completeTodos = todos.Todolist.filter((item)=>item.completed===true)
 
  return (
@@ -23,7 +23,7 @@ const CompletedTodos = () => {
        renderItem={({item}) => <CompleteTodo title={item.todo} date={item.date} id={item.id} time={item.time} status={item.status}/>}
        keyExtractor={(item) => item.title}
        ListHeaderComponent={() => <Text 
-        style = {texts}>Completed Todos ({completeTodos.length})</Text>}   
+        style={{marginTop:20, fontWeight:"bold", marginLeft:20, marginBottom:10}}>Completed Todos ({completeTodos.length})</Text>}   
        contentContainerStyle={{paddingHorizontal:20}}
      
      />

@@ -8,7 +8,7 @@ import { useNavigation } from '@react-navigation/native';
 import { edittodo } from '../Store/todosReducer';
 import { useDispatch } from 'react-redux';
 const EditTodo = ({route}) => {
-  const {name,id} =route.params
+  const {name, id} =route.params
   const dispatch = useDispatch()
     const { container ,text} = styles
     const [loading, setLoading] = useState(false);
@@ -16,7 +16,7 @@ const EditTodo = ({route}) => {
     const Navigation = useNavigation();
     const editTodo= () =>{           
         setLoading(true)
-        setTimeout(loader,4000)
+        setTimeout(loader,3000)
         dispatch(edittodo({id:id,itemData:todo}))        
         }
         const loader=()=>{
@@ -84,8 +84,15 @@ const styles = StyleSheet.create({
     container:{
         flex:1,
     },
-    text:{fontWeight:"bold",
-      color:colors.primary,
-      marginLeft:10,
-      fontSize:20}
+    text:{
+      backgroundColor:colors.background,
+      width:350,
+      borderRadius:10,
+      marginTop:10,
+      paddingVertical:15,
+      flexDirection:"row",
+      alignItems:'center',
+      marginHorizontal:20,
+      justifyContent:"center"
+    }
 })

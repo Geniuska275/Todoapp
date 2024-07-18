@@ -18,7 +18,7 @@ const AddTodo = () => {
     const addTodo = () =>{  
         dispatch(addtodo(todo))         
         setLoading(true)
-        setTimeout(loader,4000)
+        setTimeout(loader,3000)
             
         }
         const loader=()=>{
@@ -77,15 +77,16 @@ const styles = StyleSheet.create({
       justifyContent:"center"
    },
    input:{       
-      backgroundColor:colors.background,
       width:350,
+      borderColor:colors.background,
+      borderWidth:1,
+      paddingHorizontal:10, 
       borderRadius:10,
       marginTop:10,
       paddingVertical:15,
-      flexDirection:"row",
-      alignItems:'center',
+    
       marginHorizontal:20,
-      justifyContent:"center"
+     
    },
    text:{
       fontWeight:"bold",

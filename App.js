@@ -1,19 +1,35 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
+import SplashScreen from './Screens/SplashScreen';
+import Todos from './Screens/Todos';
+import AddTodo from './Screens/AddTodo';
 
+// Only import react-native-gesture-handler on native platforms
+import 'react-native-gesture-handler';
+import MyTabs from './Navigation/BottomNav';
+import { useState , useEffect } from 'react';
 export default function App() {
+  const [show,setIsShow]=useState(true)
+
+  useEffect(()=>{
+    setTimeout(()=>{
+     setIsShow(false)
+    },5000)
+  },[])
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
+    <>
+       {show ? <SplashScreen/>:
+       <MyTabs/>
+       }
       <StatusBar style="auto" />
-    </View>
+    </>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: 'red',
     alignItems: 'center',
     justifyContent: 'center',
   },

@@ -3,9 +3,14 @@ import React ,{useState} from 'react'
 import { FontAwesome5 } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
+import { useDispatch } from 'react-redux';
+import { useNavigation } from '@react-navigation/native';
+import { deletetodo } from '../Store/todosReducer';
 
-const CompleteTodo = ({title,date,status}) => {
+const CompleteTodo = ({title,date,status,time ,id}) => {
   const [show,setShow] = useState(false)
+  const dispatch = useDispatch()
+  const Navigation = useNavigation()
 
   const deleteTodo = (title)=>{
     Alert.alert(
@@ -19,7 +24,9 @@ const CompleteTodo = ({title,date,status}) => {
         },
         {
           text: "OK", // Button label
-          onPress: () => console.log("OK Pressed") // Callback when pressed
+          onPress: () =>{
+            dispatch(deletetodo(id))
+          } /// Callback when pressed
         }
       ],
       { cancelable: true } // Optional: Whether the alert can be dismissed by tapping outside the alert
@@ -38,7 +45,9 @@ const CompleteTodo = ({title,date,status}) => {
         },
         {
           text: "YES", // Button label
-          onPress: () => console.log("OK Pressed") // Callback when pressed
+          onPress: () =>{
+            Navigation.navigate('EditTodo', { name: title ,id:id})
+          }  // Callback when pressed
         }
       ],
       { cancelable: true } // Optional: Whether the alert can be dismissed by tapping outside the alert
@@ -74,7 +83,9 @@ const CompleteTodo = ({title,date,status}) => {
        elevation:4,    
        flexDirection:"row",
        alignItems:"center",
-       justifyContent:"space-between"
+       justifyContent:"space-between",
+       borderColor:"green",
+       borderWidth:status? 2:1,
     }}>
         <View style={{
           width:40,
@@ -91,7 +102,8 @@ const CompleteTodo = ({title,date,status}) => {
         <View>
             <Text style={{textTransform:"uppercase", fontWeight:"bold"}}>{title}</Text>
             <Text style={{marginTop:5}}>{date}</Text>
-            
+            <Text style={{marginTop:5}}>{time}</Text>       
+
         </View>
 
        {show ? 

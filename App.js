@@ -8,8 +8,12 @@ import AddTodo from './Screens/AddTodo';
 import 'react-native-gesture-handler';
 import MyTabs from './Navigation/BottomNav';
 import { useState , useEffect } from 'react';
+import { Provider } from 'react-redux';
+import { store } from './Store/store';
+
+
 export default function App() {
-  const [show,setIsShow]=useState(true)
+  const [show, setIsShow] = useState(true)
 
   useEffect(()=>{
     setTimeout(()=>{
@@ -17,12 +21,15 @@ export default function App() {
     },5000)
   },[])
   return (
-    <>
+  
+
+    <Provider store={store}>
        {show ? <SplashScreen/>:
        <MyTabs/>
-       }
+      }
       <StatusBar style="auto" />
-    </>
+    </Provider>
+     
   );
 }
 

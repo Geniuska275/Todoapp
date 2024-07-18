@@ -1,21 +1,43 @@
-import { SafeAreaView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
+import { ActivityIndicator, SafeAreaView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
 import React,{useEffect,useState} from 'react'
 import { AntDesign } from '@expo/vector-icons';
 import Header from '../components/Header'
 import { colors } from '../Constants/Colors';
-
-
-const EditTodo = () => {
+import { Feather } from '@expo/vector-icons';
+import { useNavigation } from '@react-navigation/native';
+import { edittodo } from '../Store/todosReducer';
+import { useDispatch } from 'react-redux';
+const EditTodo = ({route}) => {
+  const {name,id} =route.params
+  const dispatch = useDispatch()
     const { container } = styles
-    const [loading, setLoading] = useState(true);
+    const [loading, setLoading] = useState(false);
+    const [todo, setTodo]= useState(name);
+    const Navigation=useNavigation();
+    const editTodo=()=>{           
+        setLoading(true)
+        setTimeout(loader,4000)
+        dispatch(edittodo({id:id,itemData:todo}))        
+        }
+        const loader=()=>{
+          setLoading(false)
+          Navigation.navigate("AllTodos")
+         }
 
     
   return (
-    <SafeAreaView style={container}>
-        <Header/>
-        
-
-     <View style={{alignSelf:"center",marginTop:250}}>
+    <SafeAreaView style={container}>  
+     {loading &&(
+        <View style={[StyleSheet.absoluteFill,{
+          backgroundColor:"rgba(0,0,0,0.6)",
+          alignItems:"center",
+          justifyContent:"center",
+          zIndex:30000
+       }   
+       ]}>
+       <ActivityIndicator  color={colors.background} animating size={180}/>
+     </View>)}      
+     <View style={{alignSelf:"center",marginTop:200}}>
          <Text style={{
             fontWeight:"bold",
             fontSize:24,
@@ -23,7 +45,7 @@ const EditTodo = () => {
             color:'#243c56',
             alignSelf:"center"
          }}>EDIT TODO</Text>
-         <TextInput placeholder='Add a todo'  style={{
+         <TextInput placeholder='Edit todo'  style={{
             width:350,
             borderColor:'#243c56',
             borderWidth:1,
@@ -32,7 +54,11 @@ const EditTodo = () => {
             marginBottom:10,
             borderRadius:5,
             alignSelf:"center"
-         }}/>
+         }}
+         
+         onChangeText={(text)=>setTodo(text)}
+         value={todo}/>
+
          <TouchableOpacity style={{       
             backgroundColor:colors.background,
             width:350,
@@ -45,9 +71,9 @@ const EditTodo = () => {
             justifyContent:"center"
          }}
          onPress={()=>{
-
+               editTodo()
          }}>
-         <AntDesign name="plussquare" size={24} color={colors.primary} />
+          <Feather name="edit" size={24} color={colors.primary} />
          <Text style={{fontWeight:"bold",color:colors.primary,marginLeft:10,fontSize:20}}>EDIT</Text>
          </TouchableOpacity>
      </View>

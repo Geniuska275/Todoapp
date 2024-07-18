@@ -3,20 +3,15 @@ import React, { useState } from 'react'
 import Header from '../components/Header'
 import Todo from '../components/Todo'
 import { colors } from '../Constants/Colors'
+import { useSelector } from 'react-redux'
 
 const Todos = () => {
+  const todos=useSelector((state)=>state.todos)
+  console.log(todos)
+
+
     const [modalVisible, setModalVisible] = useState(false);
-     const [todos,setTodos] = useState([
-       {title:"Meeting", date:"12:00pm", status:"active"},
-       {title:"Grocery Shopping", date:"1:00pm", status:"inactive"},
-       {title:"Dinner", date:"2:00pm", status:"inactive"},
-       {title:"Meeting", date:"12:00pm", status:"active"},
-       {title:"Grocery Shopping", date:"1:00pm", status:"inactive"},
-       {title:"Dinner", date:"2:00pm", status:"inactive"},
-       {title:"Meeting", date:"12:00pm", status:"active"},
-       {title:"Grocery Shopping", date:"1:00pm", status:"inactive"},
-       {title:"Dinner", date:"2:00pm", status:"inactive"},
-     ])
+   
     const { radius ,text} = styles;
   return (
     <SafeAreaView style={{
@@ -25,11 +20,10 @@ const Todos = () => {
     }}>
       <Header/>
       <FlatList
-        data={todos}
-        renderItem={({item}) => <Todo title={item.title} date={item.date} status={item.status}/>}
+        data={todos.Todolist}
+        renderItem={({item}) => <Todo title={item.todo} id={item.id} time={item.time}  date={item.date} status={item.completed}/>}
         keyExtractor={(item) => item.title}
-        ListHeaderComponent={() => <Text style={{marginTop:20, fontWeight:"bold", marginLeft:20, marginBottom:10}}>My Todos({todos.length})</Text>}
-       
+        ListHeaderComponent={() => <Text style={{marginTop:20, fontWeight:"bold", marginLeft:20, marginBottom:10}}>My Todos({todos.Todolist?.length})</Text>} 
         contentContainerStyle={{paddingHorizontal:20}}
       
       />

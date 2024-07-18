@@ -5,18 +5,14 @@ import Header from '../components/Header'
 import Todo from '../components/Todo'
 import { colors } from '../Constants/Colors'
 import CompleteTodo from '../components/completeTodo'
+import { useSelector } from 'react-redux'
 
 const CompletedTodos = () => {
   const [modalVisible, setModalVisible] = useState(false);
-
-    const [todos,setTodos] = useState([
-      {title:"Meeting", date:"12:00pm", status:"active"},
-      {title:"Grocery Shopping", date:"1:00pm", status:"inactive"},
-      {title:"Dinner", date:"2:00pm", status:"inactive"},
-      {title:"Meeting", date:"12:00pm", status:"active"},
-      
-    ])
+  const todos=useSelector((state)=>state.todos)
    const { radius ,text} = styles;
+   const completeTodos=todos.Todolist.filter((item)=>item.completed===true)
+   console.log(completeTodos)
  return (
    <SafeAreaView style={{
        backgroundColor:"white",
@@ -24,10 +20,10 @@ const CompletedTodos = () => {
    }}>
      <Header/>
      <FlatList
-       data={todos}
-       renderItem={({item}) => <CompleteTodo title={item.title} date={item.date} status={item.status}/>}
+       data={completeTodos}
+       renderItem={({item}) => <CompleteTodo title={item.todo} date={item.date} id={item.id} time={item.time} status={item.status}/>}
        keyExtractor={(item) => item.title}
-       ListHeaderComponent={() => <Text style={{marginTop:20, fontWeight:"bold", marginLeft:20, marginBottom:10}}>Completed Todos ({todos.length})</Text>}
+       ListHeaderComponent={() => <Text style={{marginTop:20, fontWeight:"bold", marginLeft:20, marginBottom:10}}>Completed Todos ({completeTodos.length})</Text>}
       
        contentContainerStyle={{paddingHorizontal:20}}
      

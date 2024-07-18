@@ -3,9 +3,15 @@ import React ,{useState} from 'react'
 import { FontAwesome5 } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
+import { useNavigation } from '@react-navigation/native';
+import { completed ,deletetodo} from '../Store/todosReducer';
+import { useDispatch } from 'react-redux';
 
-const Todo = ({title,date,status}) => {
+const Todo = ({title,date,time,status,id}) => {
   const [show,setShow] = useState(false)
+  const dispatch = useDispatch()
+
+  const Navigation = useNavigation()
 
   const deleteTodo = (title)=>{
     Alert.alert(
@@ -19,7 +25,9 @@ const Todo = ({title,date,status}) => {
         },
         {
           text: "OK", // Button label
-          onPress: () => console.log("OK Pressed") // Callback when pressed
+          onPress: () =>{
+            dispatch(deletetodo(id))
+          } // Callback when pressed
         }
       ],
       { cancelable: true } // Optional: Whether the alert can be dismissed by tapping outside the alert
@@ -38,7 +46,9 @@ const Todo = ({title,date,status}) => {
         },
         {
           text: "YES", // Button label
-          onPress: () => console.log("OK Pressed") // Callback when pressed
+          onPress: () =>{
+            Navigation.navigate('EditTodo', { name: title ,id:id})
+          } // Callback when pressed
         }
       ],
       { cancelable: true } // Optional: Whether the alert can be dismissed by tapping outside the alert
@@ -57,7 +67,10 @@ const Todo = ({title,date,status}) => {
         },
         {
           text: "YES", // Button label
-          onPress: () => console.log("OK Pressed") // Callback when pressed
+          onPress: () => {
+            Navigation.navigate('completedTodos')
+            dispatch(completed(id))
+          } // Callback when pressed
         }
       ],
       { cancelable: true } // Optional: Whether the alert can be dismissed by tapping outside the alert
@@ -74,7 +87,11 @@ const Todo = ({title,date,status}) => {
        elevation:4,    
        flexDirection:"row",
        alignItems:"center",
-       justifyContent:"space-between"
+       justifyContent:"space-between",
+       borderColor:status ? "green":"red",
+       borderWidth:status? 2:1,
+     
+ 
     }}>
         <View style={{
           width:40,
@@ -91,6 +108,7 @@ const Todo = ({title,date,status}) => {
         <View>
             <Text style={{textTransform:"uppercase", fontWeight:"bold"}}>{title}</Text>
             <Text style={{marginTop:5}}>{date}</Text>
+            <Text style={{marginTop:5}}>{time}</Text>
             <Text style={{color:"red",marginTop:5}}>{status}</Text>
         </View>
 

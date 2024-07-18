@@ -10,11 +10,11 @@ import { useDispatch } from 'react-redux';
 const EditTodo = ({route}) => {
   const {name,id} =route.params
   const dispatch = useDispatch()
-    const { container } = styles
+    const { container ,text} = styles
     const [loading, setLoading] = useState(false);
     const [todo, setTodo]= useState(name);
-    const Navigation=useNavigation();
-    const editTodo=()=>{           
+    const Navigation = useNavigation();
+    const editTodo= () =>{           
         setLoading(true)
         setTimeout(loader,4000)
         dispatch(edittodo({id:id,itemData:todo}))        
@@ -45,7 +45,8 @@ const EditTodo = ({route}) => {
             color:'#243c56',
             alignSelf:"center"
          }}>EDIT TODO</Text>
-         <TextInput placeholder='Edit todo'  style={{
+         <TextInput placeholder='Edit todo'  
+         style={{
             width:350,
             borderColor:'#243c56',
             borderWidth:1,
@@ -59,22 +60,18 @@ const EditTodo = ({route}) => {
          onChangeText={(text)=>setTodo(text)}
          value={todo}/>
 
-         <TouchableOpacity style={{       
-            backgroundColor:colors.background,
-            width:350,
-            borderRadius:10,
-            marginTop:10,
-            paddingVertical:15,
-            flexDirection:"row",
-            alignItems:'center',
-            marginHorizontal:20,
-            justifyContent:"center"
-         }}
+         <TouchableOpacity style={text}
          onPress={()=>{
                editTodo()
          }}>
           <Feather name="edit" size={24} color={colors.primary} />
-         <Text style={{fontWeight:"bold",color:colors.primary,marginLeft:10,fontSize:20}}>EDIT</Text>
+         <Text 
+         style={{
+          fontWeight:"bold",
+          color:colors.primary,
+          marginLeft:10,
+          fontSize:20
+          }}>EDIT</Text>
          </TouchableOpacity>
      </View>
     </SafeAreaView>
@@ -86,7 +83,9 @@ export default EditTodo
 const styles = StyleSheet.create({
     container:{
         flex:1,
-        
- 
-    }
+    },
+    text:{fontWeight:"bold",
+      color:colors.primary,
+      marginLeft:10,
+      fontSize:20}
 })

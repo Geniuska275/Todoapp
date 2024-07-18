@@ -8,7 +8,7 @@ import { completed ,deletetodo} from '../Store/todosReducer';
 import { useDispatch } from 'react-redux';
 
 const Todo = ({title,date,time,status,id}) => {
-  const [show,setShow] = useState(false)
+  const [show, setShow] = useState(false)
   const dispatch = useDispatch()
 
   const Navigation = useNavigation()

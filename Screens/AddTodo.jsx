@@ -9,16 +9,13 @@ import { addtodo } from '../Store/todosReducer';
 
 
 const AddTodo = () => {
-   const dispatch=useDispatch()
-    const { container } = styles
-    const [loading, setLoading]= useState(false);
+   const dispatch = useDispatch()
+    const { container ,Touch, input, text, texts} = styles
+    const [loading, setLoading] = useState(false);
     const [todo, setTodo]= useState("");
-    
-
-
-    const Navigation=useNavigation();
+    const Navigation = useNavigation();
    
-    const addTodo=()=>{  
+    const addTodo = () =>{  
         dispatch(addtodo(todo))         
         setLoading(true)
         setTimeout(loader,4000)
@@ -40,46 +37,22 @@ const AddTodo = () => {
           zIndex:30000
        }   
        ]}>
-       <ActivityIndicator  color={colors.background} animating size={180}/>
-     </View>)}
+       <ActivityIndicator  
+       color={colors.background} 
+       animating size={180}/>
+     </View>
+   )}
 
-     <View style={{alignSelf:"center",marginTop:200}}>
-         <Text style={{
-            fontWeight:"bold",
-            fontSize:24,
-            marginBottom:10,
-            color:'#243c56',
-            alignSelf:"center"
-         }}>ADD TODO</Text>
-         <TextInput placeholder='Add a todo'  style={{
-            width:350,
-            borderColor:'#243c56',
-            borderWidth:1,
-            paddingHorizontal:10,
-            paddingVertical:20,
-            marginBottom:10,
-            borderRadius:5,
-            alignSelf:"center"
-         }}
+      <View style={{alignSelf:"center",marginTop:200}}>
+         <Text style={text}>ADD TODO</Text>
+         <TextInput placeholder='Add a todo'  style={input}
          onChangeText={(text)=>setTodo(text)}/>
-        
-         <TouchableOpacity style={{       
-            backgroundColor:colors.background,
-            width:350,
-            borderRadius:10,
-            marginTop:10,
-            paddingVertical:15,
-            flexDirection:"row",
-            alignItems:'center',
-            marginHorizontal:20,
-            justifyContent:"center"
-         }}
-         onPress={()=>{
+         <TouchableOpacity style={Touch}
+         onPress = {()=>{
             addTodo()
-
          }}>
          <AntDesign name="plussquare" size={24} color={colors.primary} />
-         <Text style={{fontWeight:"bold",color:colors.primary,marginLeft:10,fontSize:20}}>Add</Text>
+         <Text style={texts}>Add</Text>
          </TouchableOpacity>
      </View>
     </SafeAreaView>
@@ -91,7 +64,40 @@ export default AddTodo
 const styles = StyleSheet.create({
     container:{
         flex:1,
-        
- 
-    }
+    },
+    Touch:{       
+      backgroundColor:colors.background,
+      width:350,
+      borderRadius:10,
+      marginTop:10,
+      paddingVertical:15,
+      flexDirection:"row",
+      alignItems:'center',
+      marginHorizontal:20,
+      justifyContent:"center"
+   },
+   input:{       
+      backgroundColor:colors.background,
+      width:350,
+      borderRadius:10,
+      marginTop:10,
+      paddingVertical:15,
+      flexDirection:"row",
+      alignItems:'center',
+      marginHorizontal:20,
+      justifyContent:"center"
+   },
+   text:{
+      fontWeight:"bold",
+      fontSize:24,
+      marginBottom:10,
+      color:'#243c56',
+      alignSelf:"center"
+   },
+   texts:{
+      fontWeight:"bold",
+      color:colors.primary,
+      marginLeft:10,
+      fontSize:20
+     }
 })

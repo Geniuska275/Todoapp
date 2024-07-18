@@ -33,8 +33,7 @@ const Todos = () => {
         visible={modalVisible}
         
       >
-        <View style={{
-              
+        <View style={{          
              marginTop: 300,
               backgroundColor:"red",
               marginHorizontal:10,
@@ -42,9 +41,6 @@ const Todos = () => {
               borderTopLeftRadius:30,
               borderTopRightRadius:30
               }}>
-
-
-
           <View >
             <Text>Hello World!</Text>
             <Button title="Hide Modal" onPress={() => setModalVisible(!modalVisible)} />

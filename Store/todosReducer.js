@@ -3,8 +3,7 @@ import { createSlice } from '@reduxjs/toolkit';
 const todoSlice = createSlice({
   name: 'todos',
   initialState: {
-
- Todolist: [], // Assuming todos are stored in an array
+ Todolist: []
   },
   reducers: {
     addtodo: (state, action) => {
@@ -43,6 +42,14 @@ const todoSlice = createSlice({
                 }
 
     },
+    settodos:(state,action)=>{
+      console.log(action.payload)
+      return {
+                 ...state,
+                  Todolist: action.payload,
+                }
+
+    },
     edittodo:(state,action)=>{
 
       return {
@@ -71,6 +78,6 @@ const todoSlice = createSlice({
   
 });
 
-export const { addtodo,completed,deletetodo ,edittodo} = todoSlice.actions;
+export const { addtodo,completed,deletetodo ,edittodo,settodos} = todoSlice.actions;
 
 export default todoSlice.reducer;

@@ -1,6 +1,7 @@
 import { createStackNavigator } from '@react-navigation/stack';
 import EditTodo from '../Screens/EditTodo';
 import Todos from '../Screens/Todos';
+import TodosDetails from '../Screens/TodosDetails';
 
 const Stack = createStackNavigator();
 
@@ -19,6 +20,12 @@ function MyStack() {
         title: route.params.name, // Dynamic title based on route parameter
       })}
       component={EditTodo} />
+       <Stack.Screen name="TodoDetails"
+    
+    options={({ route }) => ({
+     title: route.params.name, // Dynamic title based on route parameter
+     })}
+   component={TodosDetails} />
      
     </Stack.Navigator>
   );

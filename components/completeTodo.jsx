@@ -74,7 +74,12 @@ const CompleteTodo = ({title,date,status,time ,id}) => {
   }
 
   return (
-    <View style={{
+    <TouchableOpacity
+    onPress={()=>{
+      Navigation.navigate('TodoDetails', { name: title ,id:id})
+     }}
+    
+    style={{
        marginHorizontal:20,
        backgroundColor:"#e3c778",
        borderRadius:10,
@@ -129,7 +134,7 @@ const CompleteTodo = ({title,date,status,time ,id}) => {
           <FontAwesome5 name="ellipsis-v" size={24} color="#243c56" />
         </TouchableOpacity>
     
-    </View>
+    </TouchableOpacity>
   )
 }
 

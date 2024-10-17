@@ -98,7 +98,7 @@ const TodosDetails = ({route}) => {
                 Notifications.scheduleNotificationAsync({
                     content: {
                        title: "Completed Todo",
-                       body: `You have completed ${completeTodos.length} todos, WELL DONE`
+                       body: `You have completed a todo, WELL DONE`
                      },
                      trigger:null,
                    })     

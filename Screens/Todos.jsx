@@ -18,42 +18,6 @@ import * as Notifications from 'expo-notifications';
 const Todos = () => {
 
   const todos=useSelector((state)=>state.todos)
- const  Uncompleted = todos.Todolist.filter((item)=>item.completed===false);
-
-async function scheduleEveryFiveMinutes() {
-  try {
-    let lastScheduledTime = new Date();
-    lastScheduledTime.setMinutes(lastScheduledTime.getMinutes() + 5); // Start at the next 5-minute mark
-    
-
-    
-    while (true) {
-      const now = new Date();
-      
-      // Calculate when the next notification should trigger
-      const nextTriggerTime = new Date(now.getFullYear(), now.getMonth(), now.getDate(),
-      now.getHours(), now.getMinutes() + 5, 0); // Add 5 minutes
-      
-      // Schedule the notification
-      await Notifications.scheduleNotificationAsync({
-        content: {
-            title: "Uncompleted Todos",
-            body: `${Uncompleted.length === 0 ?   `You still have completed your tasks,WELL DONE.` :   ` You still  have ${Uncompleted.length} Uncompleted Todos`} `
-          },
-          trigger: nextTriggerTime,
-        });
-        
-        
-        // Wait for 5 minutes before scheduling the next notification
-        await new Promise(resolve => setTimeout(resolve, 5 * 60 * 1000));
-      }
-    } catch (error) {
-      console.error('Error scheduling notifications:', error);
-    }
-  }
-  
-  // Start the scheduler
-  scheduleEveryFiveMinutes();
    const [loading, setLoading] = useState(true);
    const [error, setError] = useState(null);
    const dispatch = useDispatch()

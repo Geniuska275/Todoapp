@@ -49,7 +49,11 @@ const Todo = ({title,date,time,status,id}) => {
         </View>
 
         <View>
-            <Text style={{textTransform:"uppercase", fontWeight:"bold"}}>{title}</Text>
+            <Text style={{textTransform:"uppercase", fontWeight:"bold",width:200,
+            }}
+            numberOfLines={1}
+            
+            >{title}</Text>
             <Text style={{marginTop:5}}>{date}</Text>
             <Text style={{marginTop:5}}>{time}</Text>
             <Text style={{color:"red",marginTop:5}}>{status}</Text>

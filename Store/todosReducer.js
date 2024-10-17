@@ -58,7 +58,7 @@ const todoSlice = createSlice({
 
     },
     settodos:(state,action)=>{
-      console.log(action.payload)
+     
       return {
                  ...state,
                   Todolist: action.payload,
@@ -87,17 +87,30 @@ const todoSlice = createSlice({
       })
     }
 
-    }
+    },
    
-    
-
-
+    saveItem: (state, action) => {
+      const item = action.payload;
+      state.Todolist.push(item);
+    },
+    loadItems: (state, action) => {
+      const items = JSON.parse(action.payload);
+      state.Todolist = items;
+    },
 
     // Define other reducers as needed
   }
   
 });
 
-export const { addtodo,completed,deletetodo ,edittodo,settodos,Uncompleted} = todoSlice.actions;
+export const { addtodo,
+  completed,
+  saveItem,
+  loadItems,
+  edittodo,
+  settodos,
+  deletetodo,
+  Uncompleted
+} = todoSlice.actions;
 
 export default todoSlice.reducer;

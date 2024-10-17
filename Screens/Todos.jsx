@@ -16,11 +16,14 @@ import * as Notifications from 'expo-notifications';
 
 
 const Todos = () => {
-
+  
   const todos=useSelector((state)=>state.todos)
-   const [loading, setLoading] = useState(true);
-   const [error, setError] = useState(null);
-   const dispatch = useDispatch()
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [data,setData]=useState([])
+  const dispatch = useDispatch()
+  console.log(todos)
+  
    
   const fetchData = async (url) => {
     setError(null);
@@ -33,7 +36,7 @@ const Todos = () => {
         setTimeout(loader,2000)
       }
        const data = await response.json();
-       await AsyncStorage.setItem('todos', JSON.stringify(data));
+       dispatch(settodos(data))
      
     } catch (err) {
       setError(err.message);
@@ -51,19 +54,34 @@ const Todos = () => {
     setLoading(false)
    }
 
-   useEffect(()=>{
-    AsyncStorage.getItem('todos').then(data => {
-      console.log(data)
-      if(data){
-        dispatch(settodos(JSON.parse(data)))
-      }
-    })
-   },[])
+   useEffect(()=>{ 
+  const saveData = async () => {
+    try {
+      await AsyncStorage.setItem('todos', JSON.stringify(todos.Todolist));
+      
+    } catch (e) {
+      console.error('Failed to save data', e);
+    }
+  };
+  saveData()
+   },[todos])
 
-
-    const [modalVisible, setModalVisible] = useState(false);
    
-    const { radius ,text} = styles;
+   useEffect(()=>{ 
+    const getData = async () => {
+      try {
+       const result= await AsyncStorage.getItem('todos');
+        setData(JSON.parse(result))
+      } catch (e) {
+        console.error('Failed to save data', e);
+      }
+    };
+    getData()
+     },[todos])
+  
+     
+    
+
   return (
     <SafeAreaView style={{
         backgroundColor:"white",
@@ -85,10 +103,11 @@ const Todos = () => {
    )}
 
       {!loading && <FlatList
-        data={todos.Todolist}
+        data={data}
         renderItem={({item}) => <Todo title={item.todo} id={item.id} time={item.time}  date={item.date} status={item.completed}/>}
         keyExtractor={(item) => item.title}
-        ListHeaderComponent={() => <Text style={{marginTop:20, fontWeight:"bold", marginLeft:20, marginBottom:10}}>{todos.Todolist.length=== 0 ? "Please,Add a Todo." : `My todos (${todos.Todolist.length})`}</Text>}
+        ListHeaderComponent={() => <Text style={{marginTop:20, fontWeight:"bold", marginLeft:20,
+           marginBottom:10}}>{data.length=== 0 ? "Please,Add a Todo." : `My todos (${todos.Todolist.length})`}</Text>}
         contentContainerStyle={{paddingHorizontal:20}}
       
       />}

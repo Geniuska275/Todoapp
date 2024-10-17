@@ -6,6 +6,7 @@ import { colors } from '../Constants/Colors';
 import { useNavigation } from '@react-navigation/native';
 import { useDispatch } from 'react-redux';
 import { addtodo } from '../Store/todosReducer';
+import * as Notification from 'expo-notifications';
 
 
 const AddTodo = () => {
@@ -15,12 +16,21 @@ const AddTodo = () => {
     const [todo, setTodo]= useState("");
     const Navigation = useNavigation();
    
-    const addTodo = () =>{  
+    const addTodo = async () =>{  
         dispatch(addtodo(todo))         
         setLoading(true)
-        setTimeout(loader,3000)
-            
+        setTimeout(loader,3000)  
+      Notification.scheduleNotificationAsync({
+         content: {
+            title: "New Todo",
+            body: todo
+          },
+          trigger:new Date(Date.now() + 120),
+        })     
         }
+
+
+
         const loader=()=>{
           setLoading(false)
           Navigation.navigate("AllTodos")

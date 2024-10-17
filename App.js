@@ -8,7 +8,7 @@ import AddTodo from './Screens/AddTodo';
 import 'react-native-gesture-handler';
 import MyTabs from './Navigation/BottomNav';
 import { useState , useEffect } from 'react';
-import { Provider } from 'react-redux';
+import { Provider, useSelector } from 'react-redux';
 import { store } from './Store/store';
 import { useRef } from 'react';
 import { Platform } from 'react-native';
@@ -20,8 +20,8 @@ import Constants from 'expo-constants';
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
     shouldShowAlert: true,
-    shouldPlaySound: false,
-    shouldSetBadge: false,
+    shouldPlaySound: true,
+    shouldSetBadge: true,
   }),
 });
 
@@ -29,6 +29,9 @@ function handleRegistrationError(errorMessage) {
   alert(errorMessage);
   throw new Error(errorMessage);
 }
+
+
+// Your code
 
 async function registerForPushNotificationsAsync() {
   if (Platform.OS === 'android') {
@@ -51,7 +54,10 @@ async function registerForPushNotificationsAsync() {
       handleRegistrationError('Permission not granted to get push token for push notification!');
       return;
     }
-    const projectId ="83df1a3f-0c8d-4520-b7ab-73dbc24b57bd"
+    const projectId = Constants?.expoConfig?.extra?.eas?.projectId ??
+       Constants?.easConfig?.projectId;
+
+
     if (!projectId) {
       handleRegistrationError('Project ID not found');
     }
@@ -61,6 +67,7 @@ async function registerForPushNotificationsAsync() {
           projectId,
         })
       ).data;
+
       console.log(pushTokenString);
       return pushTokenString;
     } catch (e) {
@@ -71,12 +78,15 @@ async function registerForPushNotificationsAsync() {
   }
 }
 
-export default function App() {
-  const [show, setIsShow] = useState(true)
-  const [expoPushToken, setExpoPushToken] = useState('');
-  const [notification, setNotification] = useState(
-    undefined
-  );
+
+  
+  export default function App() {
+    const [show, setIsShow] = useState(true)
+    const [expoPushToken, setExpoPushToken] = useState('');
+    
+    const [notification, setNotification] = useState(
+      undefined
+    );
   const notificationListener = useRef();
   const responseListener = useRef();
 
@@ -108,12 +118,6 @@ export default function App() {
     },5000)
   },[])
   return (<>
-        {/* <Text>Your Expo push token: {expoPushToken}</Text>
-         <View style={{ alignItems: 'center', justifyContent: 'center' }}>
-           <Text>Title: {notification && notification.request.content.title} </Text>
-           <Text>Body: {notification && notification.request.content.body}</Text>
-           <Text>Data: {notification && JSON.stringify(notification.request.content.data)}</Text>
-        </View> */}
     <Provider store={store}>
        {show ? <SplashScreen/>:
        <MyTabs/>

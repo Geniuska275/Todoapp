@@ -35,6 +35,21 @@ const todoSlice = createSlice({
               }
 
     },
+    Uncompleted:(state,action)=>{
+      return {
+                ...state,
+                Todolist: state.Todolist.map((todo) =>
+                   todo.id == action.payload
+                    ? {
+                       ...todo,
+                       completed: false,
+                       completedTime: new Date().toLocaleTimeString(),
+                    }
+                  : todo
+                 ),
+              }
+
+    },
     deletetodo:(state,action)=>{
       return {
                  ...state,
@@ -59,7 +74,12 @@ const todoSlice = createSlice({
           // This is the item we want to update
           return {
             ...item,
-            todo:action.payload.itemData
+            todo:action.payload.itemData,
+            completed: item.completed,
+            completedTime: item.completedTime,
+            date: new Date().toDateString(),
+            time: new Date().toLocaleTimeString(),
+ 
           };  
         }
         // Keep the rest of the items unchanged
@@ -78,6 +98,6 @@ const todoSlice = createSlice({
   
 });
 
-export const { addtodo,completed,deletetodo ,edittodo,settodos} = todoSlice.actions;
+export const { addtodo,completed,deletetodo ,edittodo,settodos,Uncompleted} = todoSlice.actions;
 
 export default todoSlice.reducer;

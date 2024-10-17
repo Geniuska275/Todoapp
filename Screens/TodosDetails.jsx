@@ -128,7 +128,7 @@ const TodosDetails = ({route}) => {
         shadowOpacity:0.3,
         shadowRadius:4,
         elevation:5,
-        height:260,
+        height:220,
      }}>
         <Text style={{
             fontWeight:"bold",
